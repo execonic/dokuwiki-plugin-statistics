@@ -248,9 +248,9 @@ class StatisticsLogger {
 
         $http          = new DokuHTTPClient();
         $http->timeout = 10;
-        $data          = $http->get('http://api.hostip.info/get_html.php?ip=' . $ip);
+        $data          = $http->get('http://ip-api.com/json/' . $ip . '?fields=country,countryCode,city');
 
-        if(preg_match('/^Country: (.*?) \((.*?)\)\nCity: (.*?)$/s', $data, $match)) {
+        if(preg_match('/"country":"(.*?)","countryCode":"(.*?)","city":"(.*?)"/', $data, $match)) {
             $country = addslashes(ucwords(strtolower(trim($match[1]))));
             $code    = addslashes(strtolower(trim($match[2])));
             $city    = addslashes(ucwords(strtolower(trim($match[3]))));
